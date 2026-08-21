@@ -66,19 +66,175 @@ function showQuestion() {
 
 function checkArgument() {
 
-    const argument =
-        document.getElementById("argument").value.trim();
+    const argument = document
+        .getElementById("argument")
+        .value
+        .trim();
 
-    const result =
-        document.getElementById("result");
+    const result = document.getElementById("result");
 
     if (argument.length === 0) {
 
-        result.innerHTML =
-            "<strong>Please construct an argument first.</strong>";
+        result.innerHTML = `
+            <div class="result-box incomplete">
+                <h3>⚠️ No Argument Submitted</h3>
+                <p>
+                    Please construct your argument before checking it.
+                </p>
+            </div>
+        `;
 
         return;
     }
+
+    const text = argument.toLowerCase();
+
+    // Detect mathematical content
+    const hasEquation =
+        /[a-z]\s*=\s*[-+*/().0-9a-z]/i.test(argument) ||
+        text.includes("f(x)") ||
+        text.includes("equation");
+
+    // Detect reasoning
+    const hasReasoning =
+        text.includes("because") ||
+        text.includes("since") ||
+        text.includes("therefore") ||
+        text.includes("thus") ||
+        text.includes("hence") ||
+        text.includes("so that");
+
+    // Detect calculus
+    const hasCalculus =
+        text.includes("derivative") ||
+        text.includes("differentiate") ||
+        text.includes("calculus") ||
+        text.includes("rate of change") ||
+        text.includes("slope");
+
+    // Detect conclusion
+    const hasConclusion =
+        text.includes("therefore") ||
+        text.includes("thus") ||
+        text.includes("hence") ||
+        text.includes("we conclude") ||
+        text.includes("this proves");
+
+    // Detect an actual calculation
+    const hasCalculation =
+        /\d+\s*[+\-*/=]\s*\d+/.test(argument) ||
+        text.includes("f'(x)") ||
+        text.includes("derivative");
+
+    /*
+     * MATHEMATICAL ARGUMENT ANALYSIS
+     */
+
+    if (
+        hasEquation &&
+        hasReasoning &&
+        hasConclusion &&
+        hasCalculation
+    ) {
+
+        result.innerHTML = `
+            <div class="result-box valid">
+
+                <h3>✅ Argument Structure: Valid</h3>
+
+                <p>
+                    Your response contains the main elements
+                    required for a mathematical argument:
+                </p>
+
+                <ul>
+                    <li>Mathematical statement or equation</li>
+                    <li>Reasoning</li>
+                    <li>Calculation or mathematical operation</li>
+                    <li>Conclusion</li>
+                </ul>
+
+                <p>
+                    <strong>Status:</strong>
+                    The argument appears mathematically coherent
+                    based on the information provided.
+                </p>
+
+                <p>
+                    <strong>Note:</strong>
+                    This prototype checks the structure of the
+                    argument. It does not yet constitute formal
+                    mathematical proof verification.
+                </p>
+
+            </div>
+        `;
+
+    }
+
+    /*
+     * INCOMPLETE ARGUMENT
+     */
+
+    else if (
+        hasEquation &&
+        hasReasoning
+    ) {
+
+        result.innerHTML = `
+            <div class="result-box incomplete">
+
+                <h3>🟡 Argument: Incomplete</h3>
+
+                <p>
+                    Your argument contains mathematical
+                    reasoning, but an important component
+                    appears to be missing.
+                </p>
+
+                <p>
+                    Try adding an explicit calculation and
+                    a clearly stated conclusion.
+                </p>
+
+            </div>
+        `;
+
+    }
+
+    /*
+     * INSUFFICIENT ARGUMENT
+     */
+
+    else {
+
+        result.innerHTML = `
+            <div class="result-box invalid">
+
+                <h3>❌ Argument: Not Established</h3>
+
+                <p>
+                    The system could not establish the
+                    argument from the information provided.
+                </p>
+
+                <p>
+                    Try structuring your response as:
+                </p>
+
+                <ol>
+                    <li>State your assumptions.</li>
+                    <li>Define the relevant concepts.</li>
+                    <li>Show the mathematical reasoning.</li>
+                    <li>Perform the necessary calculations.</li>
+                    <li>State the conclusion.</li>
+                </ol>
+
+            </div>
+        `;
+
+    }
+}
 
     result.innerHTML = `
         <strong>Argument submitted.</strong>
