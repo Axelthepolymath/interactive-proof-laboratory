@@ -1,12 +1,14 @@
 const questions = {
 
-    mathematics: [
-        "Prove that the sum of two even integers is even.",
-        "Prove that there are infinitely many prime numbers.",
-        "Determine whether the statement 'every continuous function is differentiable' is true or false."
-        "Demonstrate how calculus can be applied to solve algebraic problems and geometric problems."
-        "Prove that algebraic equations can be solved or analyzed using derivatives.”
-    ],
+
+   mathematics: [
+    "Prove that the sum of two even integers is even.",
+    "Prove that there are infinitely many prime numbers.",
+    "Determine whether the statement 'every continuous function is differentiable' is true or false.",
+    "Demonstrate how calculus can be applied to solve algebraic problems and geometric problems.",
+    "Prove that algebraic equations can be solved or analyzed using derivatives.",
+    "What is a number?"
+],
 
     science: [
         "Why does an object accelerate toward Earth when dropped?",
