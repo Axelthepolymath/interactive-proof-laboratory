@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Proof Laboratory</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Proof Laboratory</h1>
+        <p>
+            Explore mathematical, scientific, and philosophical arguments.
+        </p>
+    </header>
+
+    <main>
+
+        <section id="field-selection">
+            <h2>Choose a field</h2>
+
+            <div class="fields">
+
+                <button onclick="selectField('mathematics')">
+                    Mathematics
+                </button>
+
+                <button onclick="selectField('science')">
+                    Science
+                </button>
+
+                <button onclick="selectField('philosophy')">
+                    Philosophy
+                </button>
+
+            </div>
+        </section>
+
+
+        <section id="question-section" class="hidden">
+
+            <h2 id="field-title"></h2>
+
+            <div class="question-box">
+                <h3>Question</h3>
+
+                <p id="question"></p>
+            </div>
+
+            <h3>Your Argument</h3>
+
+            <textarea
+                id="argument"
+                placeholder="Construct your proof or argument step by step..."
+            ></textarea>
+
+            <button onclick="checkArgument()">
+                Check Argument
+            </button>
+
+            <div id="result"></div>
+
+            <button onclick="nextQuestion()">
+                Next Question
+            </button>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
