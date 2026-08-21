@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
 
     <header>
         <h1>Proof Laboratory</h1>
+
         <p>
             Explore mathematical, scientific, and philosophical arguments.
         </p>
@@ -20,51 +22,72 @@
 
     <main>
 
+        <!-- FIELD SELECTION -->
+
         <section id="field-selection">
-            <h2>Choose a field</h2>
+
+            <h2>Choose a Field</h2>
 
             <div class="fields">
 
-                <button onclick="selectField('mathematics')">
+                <button type="button" onclick="selectField('mathematics')">
                     Mathematics
                 </button>
 
-                <button onclick="selectField('science')">
+                <button type="button" onclick="selectField('science')">
                     Science
                 </button>
 
-                <button onclick="selectField('philosophy')">
+                <button type="button" onclick="selectField('philosophy')">
                     Philosophy
                 </button>
 
             </div>
+
         </section>
 
+
+        <!-- QUESTION SECTION -->
 
         <section id="question-section" class="hidden">
 
             <h2 id="field-title"></h2>
 
             <div class="question-box">
+
                 <h3>Question</h3>
 
                 <p id="question"></p>
+
             </div>
 
-            <h3>Your Argument</h3>
 
-            <textarea
-                id="argument"
-                placeholder="Construct your proof or argument step by step..."
-            ></textarea>
+            <!-- ARGUMENT -->
 
-            <button onclick="checkArgument()">
-                Check Argument
-            </button>
+            <div class="argument-section">
+
+                <h3>Your Argument</h3>
+
+                <textarea
+                    id="argument"
+                    placeholder="Construct your proof or argument step by step..."
+                ></textarea>
+
+                <button type="button" onclick="checkArgument()">
+                    Check Argument
+                </button>
+
+            </div>
+
+
+            <!-- RESULT -->
 
             <div id="result"></div>
 
-            <button onclick="nextQuestion()">
+
+            <!-- NEXT QUESTION -->
+
+            <button type="button" onclick="nextQuestion()">
                 Next Question
             </button>
 
@@ -72,7 +95,11 @@
 
     </main>
 
+
+    <!-- JAVASCRIPT -->
+
     <script src="script.js"></script>
 
 </body>
+
 </html>
