@@ -1,14 +1,17 @@
+// ===============================
+// PROOF LABORATORY
+// ===============================
+
+// Questions
 const questions = {
 
-
-   mathematics: [
-    "Prove that the sum of two even integers is even.",
-    "Prove that there are infinitely many prime numbers.",
-    "Determine whether the statement 'every continuous function is differentiable' is true or false.",
-    "Demonstrate how calculus can be applied to solve algebraic problems and geometric problems.",
-    "Prove that algebraic equations can be solved or analyzed using derivatives.",
-    "What is a number?"
-],
+    mathematics: [
+        "Prove that the sum of two even integers is even.",
+        "Prove that there are infinitely many prime numbers.",
+        "Determine whether the statement 'every continuous function is differentiable' is true or false.",
+        "Demonstrate how calculus can be applied to solve algebraic problems and geometric problems.",
+        "Prove that algebraic equations can be solved or analyzed using derivatives."
+    ],
 
     science: [
         "Why does an object accelerate toward Earth when dropped?",
@@ -25,62 +28,161 @@ const questions = {
 };
 
 
+// Current state
 let currentField = "";
 let currentQuestion = 0;
 
 
+// ===============================
+// SELECT A FIELD
+// ===============================
+
 function selectField(field) {
+
+    console.log("Selected field:", field);
 
     currentField = field;
     currentQuestion = 0;
 
-    document.getElementById("field-selection")
-        .classList.add("hidden");
+    const fieldSelection =
+        document.getElementById("field-selection");
 
-    document.getElementById("question-section")
-        .classList.remove("hidden");
+    const questionSection =
+        document.getElementById("question-section");
 
+    if (!fieldSelection || !questionSection) {
+
+        console.error(
+            "Could not find field-selection or question-section."
+        );
+
+        return;
+    }
+
+    // Hide the home section
+    fieldSelection.style.display = "none";
+
+    // Show the question section
+    questionSection.style.display = "block";
+
+    // Display the question
     showQuestion();
-
 }
 
 
+// ===============================
+// SHOW QUESTION
+// ===============================
+
 function showQuestion() {
 
+    if (!currentField) {
+        return;
+    }
+
+    const fieldTitle =
+        document.getElementById("field-title");
+
+    const question =
+        document.getElementById("question");
+
+    const argument =
+        document.getElementById("argument");
+
+    const result =
+        document.getElementById("result");
+
+    if (!fieldTitle || !question) {
+
+        console.error(
+            "Question elements were not found."
+        );
+
+        return;
+    }
+
+    // Format field name
     const fieldName =
         currentField.charAt(0).toUpperCase()
         + currentField.slice(1);
 
-    document.getElementById("field-title").textContent =
-        fieldName;
+    fieldTitle.textContent = fieldName;
 
-    document.getElementById("question").textContent =
+    // Display question
+    question.textContent =
         questions[currentField][currentQuestion];
 
-    document.getElementById("argument").value = "";
+    // Clear previous answer
+    if (argument) {
+        argument.value = "";
+    }
 
-    document.getElementById("result").innerHTML = "";
-
+    // Clear previous result
+    if (result) {
+        result.innerHTML = "";
+    }
 }
 
 
+// ===============================
+// NEXT QUESTION
+// ===============================
+
+function nextQuestion() {
+
+    if (!currentField) {
+        return;
+    }
+
+    currentQuestion++;
+
+    if (
+        currentQuestion >=
+        questions[currentField].length
+    ) {
+        currentQuestion = 0;
+    }
+
+    showQuestion();
+}
+
+
+// ===============================
+// CHECK ARGUMENT
+// ===============================
+
 function checkArgument() {
 
-    const argument = document
-        .getElementById("argument")
-        .value
-        .trim();
+    const argumentElement =
+        document.getElementById("argument");
 
-    const result = document.getElementById("result");
+    const result =
+        document.getElementById("result");
+
+    if (!argumentElement || !result) {
+
+        console.error(
+            "Argument or result element was not found."
+        );
+
+        return;
+    }
+
+    const argument =
+        argumentElement.value.trim();
 
     if (argument.length === 0) {
 
         result.innerHTML = `
             <div class="result-box incomplete">
+
                 <h3>⚠️ No Argument Submitted</h3>
+
                 <p>
-                    Please construct your argument before checking it.
+                    Please construct your argument
+                    before checking it.
                 </p>
+
             </div>
         `;
 
@@ -89,30 +191,18 @@ function checkArgument() {
 
     const text = argument.toLowerCase();
 
-    // Detect mathematical content
     const hasEquation =
-        /[a-z]\s*=\s*[-+*/().0-9a-z]/i.test(argument) ||
+        argument.includes("=") ||
         text.includes("f(x)") ||
         text.includes("equation");
 
-    // Detect reasoning
     const hasReasoning =
         text.includes("because") ||
         text.includes("since") ||
         text.includes("therefore") ||
         text.includes("thus") ||
-        text.includes("hence") ||
-        text.includes("so that");
+        text.includes("hence");
 
-    // Detect calculus
-    const hasCalculus =
-        text.includes("derivative") ||
-        text.includes("differentiate") ||
-        text.includes("calculus") ||
-        text.includes("rate of change") ||
-        text.includes("slope");
-
-    // Detect conclusion
     const hasConclusion =
         text.includes("therefore") ||
         text.includes("thus") ||
@@ -120,98 +210,60 @@ function checkArgument() {
         text.includes("we conclude") ||
         text.includes("this proves");
 
-    // Detect an actual calculation
-    const hasCalculation =
-        /\d+\s*[+\-*/=]\s*\d+/.test(argument) ||
-        text.includes("f'(x)") ||
-        text.includes("derivative");
-
-    /*
-     * MATHEMATICAL ARGUMENT ANALYSIS
-     */
+    const hasCalculus =
+        text.includes("derivative") ||
+        text.includes("calculus") ||
+        text.includes("differentiate") ||
+        text.includes("slope") ||
+        text.includes("rate of change");
 
     if (
         hasEquation &&
         hasReasoning &&
-        hasConclusion &&
-        hasCalculation
+        hasConclusion
     ) {
 
         result.innerHTML = `
             <div class="result-box valid">
 
-                <h3>✅ Argument Structure: Valid</h3>
+                <h3>✅ Argument Appears Valid</h3>
 
                 <p>
-                    Your response contains the main elements
-                    required for a mathematical argument:
+                    Your argument contains:
                 </p>
 
                 <ul>
-                    <li>Mathematical statement or equation</li>
+                    <li>A mathematical statement or equation</li>
                     <li>Reasoning</li>
-                    <li>Calculation or mathematical operation</li>
-                    <li>Conclusion</li>
+                    <li>A conclusion</li>
                 </ul>
+
+                ${
+                    hasCalculus
+                    ? "<p>Calculus-related reasoning was detected.</p>"
+                    : ""
+                }
 
                 <p>
                     <strong>Status:</strong>
-                    The argument appears mathematically coherent
-                    based on the information provided.
+                    Potentially valid.
                 </p>
 
                 <p>
-                    <strong>Note:</strong>
-                    This prototype checks the structure of the
-                    argument. It does not yet constitute formal
-                    mathematical proof verification.
+                    This is currently a preliminary
+                    structural analysis, not formal
+                    proof verification.
                 </p>
 
             </div>
         `;
 
-    }
-
-    /*
-     * INCOMPLETE ARGUMENT
-     */
-
-    else if (
-        hasEquation &&
-        hasReasoning
-    ) {
+    } else {
 
         result.innerHTML = `
             <div class="result-box incomplete">
 
-                <h3>🟡 Argument: Incomplete</h3>
-
-                <p>
-                    Your argument contains mathematical
-                    reasoning, but an important component
-                    appears to be missing.
-                </p>
-
-                <p>
-                    Try adding an explicit calculation and
-                    a clearly stated conclusion.
-                </p>
-
-            </div>
-        `;
-
-    }
-
-    /*
-     * INSUFFICIENT ARGUMENT
-     */
-
-    else {
-
-        result.innerHTML = `
-            <div class="result-box invalid">
-
-                <h3>❌ Argument: Not Established</h3>
+                <h3>🟡 Argument Needs More Work</h3>
 
                 <p>
                     The system could not establish the
@@ -219,43 +271,24 @@ function checkArgument() {
                 </p>
 
                 <p>
-                    Try structuring your response as:
+                    Try including:
                 </p>
 
-                <ol>
-                    <li>State your assumptions.</li>
-                    <li>Define the relevant concepts.</li>
-                    <li>Show the mathematical reasoning.</li>
-                    <li>Perform the necessary calculations.</li>
-                    <li>State the conclusion.</li>
-                </ol>
+                <ul>
+                    <li>Your assumptions</li>
+                    <li>Your equations or evidence</li>
+                    <li>Your reasoning</li>
+                    <li>Your conclusion</li>
+                </ul>
 
             </div>
         `;
-
     }
 }
 
-    result.innerHTML = `
-        <strong>Argument submitted.</strong>
-        <p>
-            Your next version of the system can analyze
-            premises, assumptions, logical steps, evidence,
-            counterexamples, and conclusions.
-        </p>
-    `;
 
-}
+// ===============================
+// TEST MESSAGE
+// ===============================
 
-
-function nextQuestion() {
-
-    currentQuestion++;
-
-    if (currentQuestion >= questions[currentField].length) {
-        currentQuestion = 0;
-    }
-
-    showQuestion();
-
-}
+console.log("Proof Laboratory loaded successfully.");
