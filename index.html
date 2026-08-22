@@ -8,21 +8,60 @@
     <title>Proof Laboratory</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax: renders mathematical notation -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: [
+                    "script",
+                    "noscript",
+                    "style",
+                    "textarea",
+                    "pre",
+                    "code"
+                ]
+            }
+        };
+    </script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
 </head>
+
 
 <body>
 
+    <!-- =============================== -->
+    <!-- HEADER -->
+    <!-- =============================== -->
+
     <header>
+
         <h1>Proof Laboratory</h1>
 
         <p>
             Explore mathematical, scientific, and philosophical arguments.
         </p>
+
+        <p class="intro">
+            Construct your reasoning step by step and examine its logical
+            and structural features.
+        </p>
+
     </header>
+
 
     <main>
 
+        <!-- =============================== -->
         <!-- FIELD SELECTION -->
+        <!-- =============================== -->
 
         <section id="field-selection">
 
@@ -30,15 +69,21 @@
 
             <div class="fields">
 
-                <button type="button" onclick="selectField('mathematics')">
+                <button
+                    type="button"
+                    onclick="selectField('mathematics')">
                     Mathematics
                 </button>
 
-                <button type="button" onclick="selectField('science')">
+                <button
+                    type="button"
+                    onclick="selectField('science')">
                     Science
                 </button>
 
-                <button type="button" onclick="selectField('philosophy')">
+                <button
+                    type="button"
+                    onclick="selectField('philosophy')">
                     Philosophy
                 </button>
 
@@ -47,11 +92,18 @@
         </section>
 
 
+        <!-- =============================== -->
         <!-- QUESTION SECTION -->
+        <!-- =============================== -->
 
-        <section id="question-section" class="hidden">
+        <section
+            id="question-section"
+            class="hidden">
 
             <h2 id="field-title"></h2>
+
+
+            <!-- QUESTION -->
 
             <div class="question-box">
 
@@ -62,32 +114,115 @@
             </div>
 
 
+            <!-- =============================== -->
             <!-- ARGUMENT -->
+            <!-- =============================== -->
 
             <div class="argument-section">
 
                 <h3>Your Argument</h3>
 
+                <p>
+                    Construct your proof or argument step by step.
+                    Mathematical notation can be written using LaTeX.
+                </p>
+
+
                 <textarea
                     id="argument"
-                    placeholder="Construct your proof or argument step by step..."
-                ></textarea>
+                    placeholder="Example:
 
-                <button type="button" onclick="checkArgument()">
+Let f(x) = x².
+
+Then:
+f'(x) = 2x
+
+Therefore, ..."></textarea>
+
+
+                <!-- MATHEMATICAL NOTATION HELP -->
+
+                <div class="notation-help">
+
+                    <h4>Mathematical notation</h4>
+
+                    <p>
+                        You can write mathematical expressions using
+                        LaTeX notation.
+                    </p>
+
+                    <div class="notation-examples">
+
+                        <span>
+                            \( \sin(x) \)
+                        </span>
+
+                        <span>
+                            \( \cos(x) \)
+                        </span>
+
+                        <span>
+                            \( x^2 \)
+                        </span>
+
+                        <span>
+                            \( \frac{a}{b} \)
+                        </span>
+
+                        <span>
+                            \( \sqrt{x} \)
+                        </span>
+
+                        <span>
+                            \( \frac{dy}{dx} \)
+                        </span>
+
+                        <span>
+                            \( \int_a^b f(x)\,dx \)
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LIVE PREVIEW -->
+
+                <div class="preview-section">
+
+                    <h4>Mathematical Preview</h4>
+
+                    <div
+                        id="equation-preview"
+                        class="equation-preview">
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="checkArgument()">
                     Check Argument
                 </button>
 
             </div>
 
 
+            <!-- =============================== -->
             <!-- RESULT -->
+            <!-- =============================== -->
 
             <div id="result"></div>
 
 
+            <!-- =============================== -->
             <!-- NEXT QUESTION -->
+            <!-- =============================== -->
 
-            <button type="button" onclick="nextQuestion()">
+            <button
+                type="button"
+                onclick="nextQuestion()">
                 Next Question
             </button>
 
@@ -96,7 +231,9 @@
     </main>
 
 
+    <!-- =============================== -->
     <!-- JAVASCRIPT -->
+    <!-- =============================== -->
 
     <script src="script.js"></script>
 
